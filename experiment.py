@@ -24,6 +24,12 @@ import jieba
 data = pd.read_csv('ai_challenger_sentiment_analysis_trainingset_20180816/sentiment_analysis_trainingset.csv')
 
 
+# In[36]:
+
+
+max_fatures = 2000
+
+
 # In[30]:
 
 
@@ -51,7 +57,6 @@ def get_matrix(data):
     for idx,row in data.iterrows():
         row[0] = row[0].replace('rt',' ').replace(u'～', ' ').replace(u'，', ' ').replace(u'！', ' ')
 
-    max_fatures = 2000
     tokenizer = Tokenizer(num_words=max_fatures, split=' ')
     tokenizer.fit_on_texts(data['content'].values)
     X = tokenizer.texts_to_sequences(data['content'].values)
