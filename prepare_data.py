@@ -11,7 +11,14 @@ class PrepareData(object):
 		self.data =  data[['content','others_overall_experience']]
 
 	def get_data(self):
-		data = self.data[self.data.others_overall_experience != 0]
+		# remove neutral label
+		data = self.data
+		print "before filter: ", self.data.shape
+		data = data[data.others_overall_experience != 0]
+		print "filter neutral: ", data.shape
+		# remove null label
+		data = data[data.others_overall_experience != -2]
+		print "filter null: ", data.shape
 		for idx,row in data.iterrows():
 			row[0] = row[0].replace(u'～', ' ').replace(u'，', ' ').replace(u'！', ' ')
 		label = ['p' if x>0 else 'n' for x in data.others_overall_experience.values]
